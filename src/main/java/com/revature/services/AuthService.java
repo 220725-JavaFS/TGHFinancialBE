@@ -1,17 +1,22 @@
 package com.revature.services;
 
-import com.revature.models.User;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.revature.models.ConfirmationToken;
+import com.revature.models.User;
+import com.revature.repositories.ConfirmationTokenRepository;
 
 @Service
 public class AuthService {
 
     private final UserService userService;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
 
-    public AuthService(UserService userService) {
+    public AuthService(UserService userService, ConfirmationTokenRepository confirmationTokenRepository) {
         this.userService = userService;
+		this.confirmationTokenRepository = confirmationTokenRepository;
     }
 
     public Optional<User> findByCredentials(String email, String password) {
@@ -24,5 +29,13 @@ public class AuthService {
 
     public User register(User user) {
         return userService.save(user);
+    }
+    
+    public Optional<ConfirmationToken> findByConfirmationToken(String token){
+    	return confirmationTokenRepository.findByToken(token);
+    }
+    
+    public void storeToken(ConfirmationToken confirmationToken){
+    	confirmationToken = confirmationTokenRepository.save(confirmationToken);
     }
 }

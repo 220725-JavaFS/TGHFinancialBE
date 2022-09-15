@@ -1,19 +1,20 @@
 package com.revature.controllers;
 
 import java.util.Optional;
-import java.util.Properties;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
@@ -65,24 +66,38 @@ public class AuthController {
 	@PostMapping("/forgot")
 	public ResponseEntity<Void> forgotPassword(@RequestBody User user) {
 
-		System.out.println(user.toString());
+		String passwordResetURL = "http://localhost:4200/confirm-reset";
 
 		user = authService.findByEmail(user.getEmail()).get();
-
+		
 		if (user == null) {
 			return ResponseEntity.badRequest().build();
 		}
 
 		ConfirmationToken confirmationToken = new ConfirmationToken(user);
+		authService.storeToken(confirmationToken);
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		
 		mailMessage.setTo(user.getEmail());
 		mailMessage.setSubject("Complete Password Reset!");
 		mailMessage.setFrom("TGHFinancial@outlook.com");
 		mailMessage.setText("To complete the password reset process, please click here: "
-				+ "http://localhost:8082/confirm-reset?token=" + confirmationToken.getConfirmationToken());
+				+ passwordResetURL +"?token=" + confirmationToken.getToken());
 
 		emailSenderService.sendEmail(mailMessage);
 
 		return ResponseEntity.ok().build();
 	}
+	
+	@PostMapping("/confirm-reset")
+    public ResponseEntity<ConfirmationToken> validateResetToken(@RequestBody ConfirmationToken confirmationToken) {
+		
+		Optional<ConfirmationToken> optional = authService.findByConfirmationToken(confirmationToken.getToken());
+
+        if (!optional.isPresent()) {
+			return ResponseEntity.badRequest().build();
+		}
+        
+        return ResponseEntity.ok().body(optional.get());
+    }
 }

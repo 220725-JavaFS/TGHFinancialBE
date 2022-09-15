@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,31 +15,32 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ConfirmationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="token_id")
-    private long tokenid;
-
-    @Column(name="confirmation_token")
-    private String confirmationToken;
-
+    private int tokenid;
+    private String token;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-
+    
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
+    @JoinColumn(nullable = false)
     private User user;
 
     public ConfirmationToken(User user) {
         this.user = user;
         createdDate = new Date();
-        confirmationToken = UUID.randomUUID().toString();
+        token = UUID.randomUUID().toString();
     }
 
 }
