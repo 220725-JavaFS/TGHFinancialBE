@@ -46,8 +46,14 @@ public class AuthController {
 
 		session.setAttribute("user", optional.get());
 
-		return ResponseEntity.ok(optional.get());
-	}
+        return ResponseEntity.ok(optional.get());
+    }
+    
+    @PutMapping("/Reset")
+    public ResponseEntity<User> resetPassword(@RequestBody LoginRequest loginRequest) {
+		return null;
+    	
+    }
 
 	@PostMapping("/logout")
 	public ResponseEntity<Void> logout(HttpSession session) {
