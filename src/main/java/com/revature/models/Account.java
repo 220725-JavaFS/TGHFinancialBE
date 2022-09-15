@@ -24,7 +24,7 @@ public class Account {
     String description;
     Instant creationDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id")
     @JsonIgnore
     User user;
