@@ -24,7 +24,7 @@ public class Account {
     String description;
     Instant creationDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     @JsonIgnore
     User user;
