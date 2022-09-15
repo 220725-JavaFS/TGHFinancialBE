@@ -66,4 +66,18 @@ public class AccountService {
             transactionToUpsert.setAccount(account);
             return transactionRepository.save(transactionToUpsert);
     }
+    public Transaction sendMoneyTransaction(int accountId, Transaction transactionToSend,int receiveId) {
+    	Account account = accountRepository.getById(accountId);
+    	Account receiveAccount = accountRepository.getById(receiveId);  
+    	
+    	 account.setBalance(account.getBalance() - transactionToSend.getAmount());
+    	 receiveAccount.setBalance(receiveAccount.getBalance() + transactionToSend.getAmount());
+    	
+    	 accountRepository.saveAndFlush(account);
+    	 accountRepository.saveAndFlush(receiveAccount);
+    	 transactionToSend.setAccount(account);
+    	 transactionToSend.setAccount(receiveAccount);
+    	 return transactionRepository.save(transactionToSend);
+    	
+    }
 }
