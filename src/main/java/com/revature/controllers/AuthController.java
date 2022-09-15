@@ -68,7 +68,13 @@ public class AuthController {
 
 		String passwordResetURL = "http://localhost:4200/confirm-reset";
 
-		user = authService.findByEmail(user.getEmail()).get();
+		Optional<User> optional = authService.findByEmail(user.getEmail());
+		
+		if (!optional.isPresent()) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		user = optional.get();
 		
 		if (user == null) {
 			return ResponseEntity.badRequest().build();
