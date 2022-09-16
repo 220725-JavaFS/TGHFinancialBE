@@ -1,6 +1,6 @@
 INSERT INTO users (id, email, password) VALUES (
     1,
-    'testuser@gmail.com',
+    'example@example.com',
     'password'
 );
 
