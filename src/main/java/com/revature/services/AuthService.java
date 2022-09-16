@@ -26,6 +26,18 @@ public class AuthService {
     public Optional<User> findByEmail(String email) {
         return userService.findByEmail(email);
     }
+    
+    public User findUserByEmail(String email) {
+        return userService.findUserByEmail(email);
+    }
+    
+    public User findById(int id) {
+        return userService.findById(id);
+    }
+    
+    public User updateUser(User user) {
+    	return userService.save(user);
+    }
 
     public User register(User user) {
         return userService.save(user);
