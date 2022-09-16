@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -24,11 +26,13 @@ import com.revature.models.User;
 import com.revature.services.AuthService;
 import com.revature.services.EmailSenderService;
 
+
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = { "http://localhost:4200", "http://localhost:3000" }, allowCredentials = "true")
 public class AuthController {
 
+	private static Logger log = LoggerFactory.getLogger(AuthController.class);
 	private final AuthService authService;
     private EmailSenderService emailSenderService;
 
@@ -39,37 +43,59 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
+		//log user
+    	log.info("User info given: " + loginRequest);
 		Optional<User> optional = authService.findByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
-
+		//log optional
+    	log.info("Existing user found: " + optional);
 		if (!optional.isPresent()) {
+			//log error
+			log.error("Error: no such user.");
 			return ResponseEntity.badRequest().build();
 		}
 
 		session.setAttribute("user", optional.get());
-
+		//log session attribute
+		log.info("Session Attribute: " + session.toString());
+		
         return ResponseEntity.ok(optional.get());
     }
     
     @PutMapping("/reset-password")
-    public ResponseEntity<User> resetPassword(@RequestBody User user) throws Exception {
-    	User existingUser = authService.findById(user.getId());
+    public ResponseEntity<User> resetPassword(@RequestBody User user) {
+    	//log user ID
+    	log.info("User ID given: " + user.getId());
+    	//find user by email (implicitly finds the correct user ID)
+    	User existingUser = authService.findUserByEmail(user.getEmail());
+    	//log existingUser ID
+    	log.info("Correct User ID: " + existingUser.getId());
+    	//if user Id received != correct user ID then throw exception
     	if (user.getId() != existingUser.getId()){
-    		throw new Exception("Error: no such user.");
+    		//log error
+    		log.error("Error: no such user.");
+    		return ResponseEntity.notFound().build();
     	}
+    	//log previous password 
+    	log.info("Previous Password: " + existingUser.getPassword());
+    	//log updated password 
+    	log.info("Updated Password: " + user.getPassword());
+    	//log saved user password
+    	log.info("Saved user: " + user);
 		return ResponseEntity.ok().body(authService.updateUser(user));
     }
 
 	@PostMapping("/logout")
 	public ResponseEntity<Void> logout(HttpSession session) {
 		session.removeAttribute("user");
-
+		log.info("Session attribute has been removed.");
 		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("/register")
 	public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
 		User created = new User(0, registerRequest.getEmail(), registerRequest.getPassword());
-
+		//log user
+		log.info("New User created: " + created);
 		return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
 	}
 
