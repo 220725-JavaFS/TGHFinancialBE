@@ -51,8 +51,11 @@ public class AuthController {
     }
     
     @PutMapping("/reset-password")
-    public ResponseEntity<User> resetPassword(@RequestBody User user) {
-    	
+    public ResponseEntity<User> resetPassword(@RequestBody User user) throws Exception {
+    	User existingUser = authService.findById(user.getId());
+    	if (user.getId() != existingUser.getId()){
+    		throw new Exception("Error: no such user.");
+    	}
 		return ResponseEntity.ok().body(authService.updateUser(user));
     }
 
