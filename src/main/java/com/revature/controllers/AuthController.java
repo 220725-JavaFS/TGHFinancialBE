@@ -2,8 +2,12 @@ package com.revature.controllers;
 
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
+import com.revature.dtos.UserProfileRequest;
 import com.revature.models.User;
+import com.revature.models.UserProfile;
 import com.revature.services.AuthService;
+import com.revature.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +22,8 @@ public class AuthController {
 
     private final AuthService authService;
 
-    public AuthController(AuthService authService) {
+    @Autowired
+    public AuthController(AuthService authService, UserService userService) {
         this.authService = authService;
     }
 

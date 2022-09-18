@@ -1,13 +1,13 @@
 package com.revature.repositories;
 
+import com.revature.models.UserProfile;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+@Repository
+public interface UserProfileRepository extends JpaRepository<UserProfile, Integer> {
 
-import com.revature.models.User;
-import com.revature.models.UserProfile;
-
-public interface UserProfileRepository extends JpaRepository<UserProfile, Integer>{
-	
-	Optional<UserProfile> findByUser(User user);
+    Optional<UserProfile> findByUserId(int id);
 }
