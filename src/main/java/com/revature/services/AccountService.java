@@ -69,15 +69,23 @@ public class AccountService {
     public Transaction sendMoneyTransaction(int accountId, Transaction transactionToSend,int receiveId) {
     	Account account = accountRepository.getById(accountId);
     	Account receiveAccount = accountRepository.getById(receiveId);  
+    	Transaction receiveTransaction = new Transaction();
+    	receiveTransaction.setAmount(transactionToSend.getAmount());
+    	receiveTransaction.setAccount(receiveAccount);
+    	receiveTransaction.setDescription(transactionToSend.getDescription());
+    	receiveTransaction.setType(TransactionType.Income);
+    	transactionRepository.save(receiveTransaction);
     	
     	 account.setBalance(account.getBalance() - transactionToSend.getAmount());
     	 receiveAccount.setBalance(receiveAccount.getBalance() + transactionToSend.getAmount());
     	
     	 accountRepository.saveAndFlush(account);
     	 accountRepository.saveAndFlush(receiveAccount);
+    	 
     	 transactionToSend.setAccount(account);
     	 transactionRepository.save(transactionToSend);
-    	 transactionToSend.setAccount(receiveAccount);
+    	 
+    	 //transactionToSend.setAccount(receiveAccount);
     	 return transactionRepository.save(transactionToSend);
     	
     }
