@@ -29,6 +29,7 @@ public class User {
     private String email;
     private String password;
     
+    //Added 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Account> accounts;
     
