@@ -7,11 +7,9 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.revature.models.ConfirmationToken;
 import com.revature.models.User;
-import com.revature.models.ConfirmationToken;
 import com.revature.repositories.ConfirmationTokenRepository;
 import com.revature.repositories.UserRepository;
 
