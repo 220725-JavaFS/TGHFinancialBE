@@ -68,4 +68,11 @@ public class AccountService {
             return transactionRepository.save(transactionToUpsert);
     }
 
+    // added - insert new account. needs testing
+	public Account insertAccount(Account account, User user) {
+		account.setUser(user);
+		account.setCreationDate(Instant.now());
+		return accountRepository.save(account);
+	}
+
 }

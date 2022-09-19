@@ -18,7 +18,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
     
-    //added to get all accounts based on userId
+    //added to get all accounts based on userId - needs testing
     public List<Account> getAllAccounts(int userId) {
     	return this.findById(userId).getAccounts();
     }

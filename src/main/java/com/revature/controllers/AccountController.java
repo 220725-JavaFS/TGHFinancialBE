@@ -3,6 +3,7 @@ package com.revature.controllers;
 import com.revature.annotations.Authorized;
 import com.revature.models.Account;
 import com.revature.models.Transaction;
+import com.revature.models.User;
 import com.revature.services.AccountService;
 import com.revature.services.UserService;
 
@@ -23,14 +24,26 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
     private UserService userService;
 
+    @Authorized
+    @PostMapping("/new") // Added. Inserts new account to user profile
+    public ResponseEntity<Account> insertAccount(@RequestBody Account account, HttpSession session) {
+    	
+    	User user = (User) session.getAttribute("user"); 
+    	
+    	Account newAccount = accountService.insertAccount(account, user);
+    	
+    	return ResponseEntity.status(201).body(newAccount);
+    	
+    }
+    
     @Authorized
     @GetMapping("/{id}")
     public ResponseEntity<Account> getAccount(@PathVariable("id") int accountId) {
         Optional<Account> optional = accountService.findByUserId(accountId);
-        
-        
+      
         if(!optional.isPresent()) {
             return ResponseEntity.notFound().build();
         }
