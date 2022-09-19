@@ -2,124 +2,91 @@ package com.revature.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.revature.models.ConfirmationToken;
+import com.revature.models.User;
 import com.revature.repositories.ConfirmationTokenRepository;
+import com.revature.repositories.UserRepository;
 
 class AuthServiceTest {
 
-	@MockBean 
-	private static UserService userService;
-	@MockBean 
-	private static ConfirmationTokenRepository confirmationTokenRepository;
-	@MockBean 
+	private User testUser = new User(1, "example@example.com", "password");
+	private ConfirmationToken testToken = new ConfirmationToken(testUser);
+	private static UserService us;
+	private static ConfirmationTokenRepository confirmationTokenRepository = Mockito.mock(ConfirmationTokenRepository .class);
+	private static UserRepository userRepo = Mockito.mock(UserRepository .class);
 	private static AuthService as;
 	
 	@BeforeAll
 	public static void createAuthService() {
-		as = new AuthService(userService, confirmationTokenRepository);
+		us = new UserService(userRepo);
+		as = new AuthService(us, confirmationTokenRepository);
 	}
 
 	@Test
 	void testFindByCredentials() {
-		fail("Not yet implemented");
+		Optional<User> testOptional = us.findByCredentials("example@example.com", "password");
+		Mockito.when(as.findByCredentials("example@example.com", "password")).thenReturn(testOptional);
+		Optional<User> user = as.findByCredentials("example@example.com", "password");
+		assertEquals(testOptional, user);
 	}
 
 	@Test
 	void testFindByEmail() {
-		fail("Not yet implemented");
+		Optional<User> testOptional = us.findByEmail("example@example.com");
+		Mockito.when(as.findByEmail("example@example.com")).thenReturn(testOptional);
+		Optional<User> user = as.findByEmail("example@example.com");
+		assertEquals(testOptional, user);
 	}
 
 	@Test
 	void testFindUserByEmail() {
-		fail("Not yet implemented");
+		Mockito.when(as.findUserByEmail("example@example.com")).thenReturn(new User(1, "example@example.com", "password"));
+		User user = as.findUserByEmail("example@example.com");
+		assertEquals(testUser, user);
 	}
 
 	@Test
 	void testFindById() {
-		fail("Not yet implemented");
+		Mockito.when(as.findById(1)).thenReturn(new User(1, "example@example.com", "password"));
+		User user = as.findById(1);
+		assertEquals(testUser, user);
 	}
 
 	@Test
 	void testUpdateUser() {
-		fail("Not yet implemented");
+		User testSave = userRepo.save(new User(1, "example@example.com", "password"));
+		Mockito.when(as.updateUser(testUser)).thenReturn(testSave);
+		User user = as.updateUser(testUser);
+		assertEquals(testSave, user);
 	}
 
 	@Test
 	void testRegister() {
-		fail("Not yet implemented");
+		User testSave = userRepo.save(new User(1, "example@example.com", "password"));
+		Mockito.when(as.register(testUser)).thenReturn(testSave);
+		User user = as.register(testUser);
+		assertEquals(testSave, user);
 	}
 
 	@Test
 	void testFindByConfirmationToken() {
-		fail("Not yet implemented");
+		Optional<ConfirmationToken> testOptional = confirmationTokenRepository.findByToken("testToken");
+		Mockito.when(as.findByConfirmationToken("testToken")).thenReturn(testOptional);
+		Optional<ConfirmationToken> token = as.findByConfirmationToken("testToken");
+		assertEquals(testOptional, token);
 	}
 
 	@Test
 	void testStoreToken() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testObject() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetClass() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testHashCode() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testEquals() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testClone() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testToString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testNotify() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testNotifyAll() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testWait() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testWaitLong() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testWaitLongInt() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testFinalize() {
-		fail("Not yet implemented");
+		ConfirmationToken testSave = confirmationTokenRepository.save(testToken);
+		as.storeToken(testSave);
+		assertEquals(testSave, null);
 	}
 
 }

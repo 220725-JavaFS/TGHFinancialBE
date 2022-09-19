@@ -5,17 +5,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.Optional;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
 
 class UserServiceTest {
+	
 	private User testUser = new User(1, "example@example.com", "password");
-	@MockBean 
 	private static UserService us;
-	@MockBean 
 	private static UserRepository mockRepo = Mockito.mock(UserRepository .class);
+	
 	@BeforeAll
 	public static void createUserService() {
 		us = new UserService(mockRepo);
