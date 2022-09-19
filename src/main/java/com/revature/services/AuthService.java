@@ -47,7 +47,8 @@ public class AuthService {
     	return confirmationTokenRepository.findByToken(token);
     }
     
-    public void storeToken(ConfirmationToken confirmationToken){
+    public ConfirmationToken storeToken(ConfirmationToken confirmationToken){
     	confirmationToken = confirmationTokenRepository.save(confirmationToken);
+    	return confirmationToken;
     }
 }

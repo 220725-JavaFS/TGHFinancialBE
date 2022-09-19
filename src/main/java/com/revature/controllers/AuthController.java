@@ -102,8 +102,6 @@ public class AuthController {
 	@PostMapping("/forgot")
 	public ResponseEntity<Void> forgotPassword(@RequestBody User user) {
 
-		String passwordResetURL = "http://localhost:4200/confirm-reset";
-
 		Optional<User> optional = authService.findByEmail(user.getEmail());
 		
 		if (!optional.isPresent()) {
@@ -115,18 +113,8 @@ public class AuthController {
 		if (user == null) {
 			return ResponseEntity.badRequest().build();
 		}
-
-		ConfirmationToken confirmationToken = new ConfirmationToken(user);
-		authService.storeToken(confirmationToken);
-		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		
-		mailMessage.setTo(user.getEmail());
-		mailMessage.setSubject("Complete Password Reset!");
-		mailMessage.setFrom("TGHFinancial@outlook.com");
-		mailMessage.setText("To complete the password reset process, please click here: "
-				+ passwordResetURL +"?token=" + confirmationToken.getToken());
-
-		emailSenderService.sendEmail(mailMessage);
+		emailSenderService.sendPasswordResetEmail(user);
 
 		return ResponseEntity.ok().build();
 	}
