@@ -76,6 +76,7 @@ public class AccountService {
     	 accountRepository.saveAndFlush(account);
     	 accountRepository.saveAndFlush(receiveAccount);
     	 transactionToSend.setAccount(account);
+    	 transactionRepository.save(transactionToSend);
     	 transactionToSend.setAccount(receiveAccount);
     	 return transactionRepository.save(transactionToSend);
     	
