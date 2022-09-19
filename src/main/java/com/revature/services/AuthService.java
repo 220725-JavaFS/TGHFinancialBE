@@ -47,6 +47,10 @@ public class AuthService {
     	return confirmationTokenRepository.findByToken(token);
     }
     
+    public long deleteConfirmationTokenByUser(User user){
+    	return confirmationTokenRepository.deleteByUser(user);
+    }
+    
     public ConfirmationToken storeToken(ConfirmationToken confirmationToken){
     	confirmationToken = confirmationTokenRepository.save(confirmationToken);
     	return confirmationToken;

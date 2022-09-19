@@ -81,6 +81,9 @@ public class AuthController {
     	log.info("Updated Password: " + user.getPassword());
     	//log saved user password
     	log.info("Saved user: " + user);
+    	
+    	authService.deleteConfirmationTokenByUser(existingUser);
+    	
 		return ResponseEntity.ok().body(authService.updateUser(user));
     }
 

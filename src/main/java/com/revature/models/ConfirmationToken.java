@@ -29,6 +29,7 @@ public class ConfirmationToken {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int tokenid;
     private String token;
+    private boolean valid;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -41,6 +42,7 @@ public class ConfirmationToken {
         this.user = user;
         createdDate = new Date();
         token = UUID.randomUUID().toString();
+        valid = true;
     }
 
 }
