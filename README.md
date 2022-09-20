@@ -6,6 +6,36 @@
 
 ## General info
 This project is simple Lorem ipsum dolor generator.
+
+Properties in the application.yml should reflect the following:
+```
+server:
+  port: 8080
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+  datasource:
+    url: jdbc:h2:mem:memdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console.enabled: true
+  mail: 
+    host: smtp.office365.com
+    port: 587  
+    username: TGHFinancial@outlook.com
+    password: 1drowassP
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+        auth: true
+        starttls.enable: true
+        ssl.trust: smtp.office365.com
+```
 	
 ## Technologies
 Project is created with:
