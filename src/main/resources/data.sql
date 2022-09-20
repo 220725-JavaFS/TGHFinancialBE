@@ -1,6 +1,6 @@
 INSERT INTO users (id, email, password) VALUES (
     1,
-    'testuser@test.com',
+    'testuser@gmail.com',
     'password'
 );
 --Set email to real email to get reset emails
