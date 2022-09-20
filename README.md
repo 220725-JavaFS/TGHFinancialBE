@@ -2,7 +2,7 @@
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [Setup](#setup)
+* [Getting Started](#getting-started)
 
 ## General info
 This project is simple Lorem ipsum dolor generator.
@@ -51,11 +51,6 @@ Project is created with:
 * spring-boot-starter-web: 2.7.3
 * spring-security-core: 5.7.3
 	
-## Setup
-To run this project, install it locally using npm:
+## Getting started
 
-```
-$ cd ../lorem
-$ npm install
-$ npm start
-```
+To run this project, choose "Run As Spring Boot App"
