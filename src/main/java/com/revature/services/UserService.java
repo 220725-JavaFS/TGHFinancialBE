@@ -1,10 +1,13 @@
 package com.revature.services;
 
-import com.revature.models.User;
-import com.revature.repositories.UserRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.revature.models.Account;
+import com.revature.models.User;
+import com.revature.repositories.UserRepository;
 
 @Service
 public class UserService {
@@ -34,4 +37,4 @@ public class UserService {
 	public User save(User user) {
 		return userRepository.save(user);
 	}
-}
+
