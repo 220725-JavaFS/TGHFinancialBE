@@ -64,4 +64,4 @@ When testing the password reset feature, you must enter a valid email that you h
 to reset the password.
 ```
 
-Unit testing can be acheived using JUnit and Mockito. Prior to running any unit tests, test classes must be created in src/test/java. If you are testing classes whichb use dependency injection, you are going to need to use the @Mock and @InjectMocks annotations in order to properly test them.
+Unit testing can be acheived using JUnit and Mockito. Prior to running any unit tests, test classes must be created in src/test/java. If you are testing classes which use dependency injection, you are going to need to use the @Mock and @InjectMocks annotations in order to properly test them.
