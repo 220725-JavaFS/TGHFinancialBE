@@ -13,3 +13,15 @@ spring:
     password: password
   h2:
     console.enabled: true
+  mail: 
+    host: smtp.office365.com
+    port: 587  
+    username: TGHFinancial@outlook.com
+    password: 1drowassP
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+        auth: true
+        starttls.enable: true
+        ssl.trust: smtp.office365.com
+    
