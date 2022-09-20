@@ -37,6 +37,15 @@ public class AccountController {
     }
     
     @Authorized
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    //Added 
+    public ResponseEntity<Account> updateAccount(@RequestBody Account account, @RequestHeader("Current-User") String userId){
+    	User user = userService.findById(Integer.parseInt(userId));
+    	Account newAccount = accountService.updateAccount(account, user);
+    	return ResponseEntity.status(200).body(newAccount);
+    }
+    
+    @Authorized
     @GetMapping("/{id}")
     public ResponseEntity<Account> getAccount(@PathVariable("id") int accountId) {
         Optional<Account> optional = accountService.findByUserId(accountId);

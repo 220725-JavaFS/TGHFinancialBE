@@ -75,4 +75,16 @@ public class AccountService {
 		return accountRepository.save(account);
 	}
 
+	//added - updates account info. needs testing but it works!
+	public Account updateAccount(Account account, User user) {
+		account.setUser(user);
+		
+		Account updatedAccount = accountRepository.getById(account.getId());
+        updatedAccount.setBalance(account.getBalance());
+        updatedAccount.setDescription(account.getDescription());
+        updatedAccount.setName(account.getName());
+        updatedAccount.setCreationDate(Instant.now());
+        return accountRepository.saveAndFlush(updatedAccount);
+		}
+
 }
