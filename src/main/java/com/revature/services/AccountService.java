@@ -70,6 +70,7 @@ public class AccountService {
     	Account account = accountRepository.getById(accountId);
     	Account receiveAccount = accountRepository.getById(receiveId);  
     	Transaction receiveTransaction = new Transaction();
+    	if (account.getBalance()>= transactionToSend.getAmount() && transactionToSend.getAmount() >= 0) {
     	receiveTransaction.setAmount(transactionToSend.getAmount());
     	receiveTransaction.setAccount(receiveAccount);
     	receiveTransaction.setDescription(transactionToSend.getDescription());
@@ -87,6 +88,8 @@ public class AccountService {
     	 
     	 //transactionToSend.setAccount(receiveAccount);
     	 return transactionRepository.save(transactionToSend);
-    	
+    	}else {
+    		return null;
+    	}
     }
 }
