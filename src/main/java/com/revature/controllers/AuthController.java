@@ -36,6 +36,7 @@ public class AuthController {
 	private final AuthService authService;
     private EmailSenderService emailSenderService;
 
+
 	public AuthController(AuthService authService,  EmailSenderService emailSenderService) {
 		this.authService = authService;
 		this.emailSenderService = emailSenderService;
