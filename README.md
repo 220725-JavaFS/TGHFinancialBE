@@ -12,6 +12,7 @@ Project is created with:
 * h2: 2.1.214
 * Java: 1.8
 * lombok: 1.18.24
+* maven: 3.2.0
 * spring-boot-devtools: 2.7.3
 * spring-boot-starter-actuator: 2.7.3
 * spring-boot-starter-data-jpa: 2.7.3
