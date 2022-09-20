@@ -3,7 +3,10 @@ package com.revature.controllers;
 import com.revature.annotations.Authorized;
 import com.revature.models.Account;
 import com.revature.models.Transaction;
+import com.revature.models.User;
 import com.revature.services.AccountService;
+import com.revature.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,16 +24,35 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private UserService userService;
 
+    @Authorized
+    @PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
+    // Added. Inserts new account to user profile
+    public ResponseEntity<Account> insertAccount(@RequestBody Account account, @RequestHeader("Current-User") String userId) {
+    	User user = userService.findById(Integer.parseInt(userId));
+    	Account newAccount = accountService.insertAccount(account, user);
+    	return ResponseEntity.status(201).body(newAccount);
+    }
+    
     @Authorized
     @GetMapping("/{id}")
     public ResponseEntity<Account> getAccount(@PathVariable("id") int accountId) {
         Optional<Account> optional = accountService.findByUserId(accountId);
-
+      
         if(!optional.isPresent()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(optional.get());
+    }
+    
+    //added and will get all accounts based on userId 
+    @Authorized
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Account>> getAllAccount(@PathVariable("id") int userId) {
+        List<Account> accounts = userService.getAllAccounts(userId);
+        return ResponseEntity.status(200).body(accounts);
     }
 
     @Authorized
