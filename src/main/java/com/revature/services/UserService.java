@@ -21,6 +21,11 @@ public class UserService {
 	public User findUserByEmail(String email) {
 		return userRepository.findUserByEmail(email);
 	}
+	
+	  public List<Account> getAllAccounts(int userId) {
+	    	return this.findById(userId).getAccounts();
+	    }
+	 
 
 	public User findById(int id) {
 		return userRepository.getById(id);
@@ -37,4 +42,6 @@ public class UserService {
 	public User save(User user) {
 		return userRepository.save(user);
 	}
+	
+}
 
