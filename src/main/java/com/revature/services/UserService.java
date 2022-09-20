@@ -37,5 +37,9 @@ public class UserService {
 	public User save(User user) {
 		return userRepository.save(user);
 	}
+
+	public List<Account> getAllAccounts(int userId) {
+        return this.findById(userId).getAccounts();
+    }
 }
 
