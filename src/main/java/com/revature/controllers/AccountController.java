@@ -28,15 +28,12 @@ public class AccountController {
     private UserService userService;
 
     @Authorized
-    @PostMapping("/new") // Added. Inserts new account to user profile
-    public ResponseEntity<Account> insertAccount(@RequestBody Account account, HttpSession session) {
-    	
-    	User user = (User) session.getAttribute("user"); 
-    	
+    @PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
+    // Added. Inserts new account to user profile
+    public ResponseEntity<Account> insertAccount(@RequestBody Account account, @RequestHeader("Current-User") String userId) {
+    	User user = userService.findById(Integer.parseInt(userId));
     	Account newAccount = accountService.insertAccount(account, user);
-    	
     	return ResponseEntity.status(201).body(newAccount);
-    	
     }
     
     @Authorized
