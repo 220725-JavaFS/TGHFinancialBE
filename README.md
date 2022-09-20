@@ -3,6 +3,7 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Getting Started](#getting-started)
+* [Testing](#testing)
 
 ## General info
 This is the backend portion of the TGH Financial banking application project. This project was generated using Eclipse IDE for Enterprise Java and Web Developers, Version: 2022-06 (4.24.0)
@@ -54,3 +55,13 @@ spring:
 ```
 
 To run this project, choose "Run As Spring Boot App".
+
+## Testing
+
+An important note regarding user testing: 
+```
+When testing the password reset feature, you must enter a valid email that you have access to in order to receive the link 
+to reset the password.
+```
+
+Unit testing can be acheived using JUnit and Mockito. Prior to running any unit tests, test classes must be created in src/test/java. If you are testing classes whichb use dependency injection, you are going to need to use the @Mock and @InjectMocks annotations in order to properly test them.
