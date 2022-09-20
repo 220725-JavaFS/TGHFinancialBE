@@ -79,7 +79,16 @@ public class AccountController {
     @Authorized
     @PostMapping(value = "/{id}/transaction", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Transaction> addTransaction(@PathVariable("id") int accountId, @RequestBody Transaction transaction) {
+    	System.out.println("Hello Transaction");
         return new ResponseEntity<>(accountService.upsertTransaction(accountId, transaction), HttpStatus.CREATED);
     }
-
+    
+    @Authorized
+    @PostMapping(value = "/{accountId}/sendMoney{receiverId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Transaction> sendMoneyTransaction(@PathVariable("accountId") int accountId, @RequestBody Transaction transaction,@PathVariable ("receiverId")int receiverId ) {
+    	System.out.println("Hello");
+    	System.out.println(accountId + transaction.toString() + receiverId);
+    	return new ResponseEntity<>(accountService.sendMoneyTransaction(accountId, transaction, receiverId), HttpStatus.CREATED);
+    }
+    
 }
