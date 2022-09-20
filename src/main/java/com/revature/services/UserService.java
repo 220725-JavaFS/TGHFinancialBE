@@ -12,26 +12,29 @@ import com.revature.repositories.UserRepository;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+	private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-    
-    //added to get all accounts based on userId - needs testing
-    public List<Account> getAllAccounts(int userId) {
-    	return this.findById(userId).getAccounts();
-    }
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
+	public User findUserByEmail(String email) {
+		return userRepository.findUserByEmail(email);
+	}
 
-    public User findById(int id) {
-        return userRepository.getById(id);
-    }
+	public User findById(int id) {
+		return userRepository.getById(id);
+	}
 
-    public Optional<User> findByCredentials(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password);
-    }
+	public Optional<User> findByCredentials(String email, String password) {
+		return userRepository.findByEmailAndPassword(email, password);
+	}
 
-    public User save(User user) {
-        return userRepository.save(user);
-    }
-}
+	public Optional<User> findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+
+	public User save(User user) {
+		return userRepository.save(user);
+	}
+
