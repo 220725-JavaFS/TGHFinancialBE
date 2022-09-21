@@ -29,8 +29,7 @@ public class AccountService {
         User user = userService.findById(id);
         return accountRepository.findByUser(user);
     }
-    
-    
+
     public Account upsertAccount(Account accountToUpsert, String userId) {
 
         int id = Integer.parseInt(userId);
@@ -67,24 +66,5 @@ public class AccountService {
             transactionToUpsert.setAccount(account);
             return transactionRepository.save(transactionToUpsert);
     }
-
-    // added - insert new account. needs testing
-	public Account insertAccount(Account account, User user) {
-		account.setUser(user);
-		account.setCreationDate(Instant.now());
-		return accountRepository.save(account);
-	}
-
-	//added - updates account info. needs testing but it works!
-	public Account updateAccount(Account account, User user) {
-		account.setUser(user);
-		
-		Account updatedAccount = accountRepository.getById(account.getId());
-        updatedAccount.setBalance(account.getBalance());
-        updatedAccount.setDescription(account.getDescription());
-        updatedAccount.setName(account.getName());
-        updatedAccount.setCreationDate(Instant.now());
-        return accountRepository.saveAndFlush(updatedAccount);
-		}
 
 }
