@@ -28,12 +28,4 @@ public class UserServiceTests {
 		Optional<UserProfile> userProfile = userService.findProfileForUser(1);
 		assertEquals(testProfile, userProfile);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }
