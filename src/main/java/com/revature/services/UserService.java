@@ -14,10 +14,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserProfileRepository profileRepository;
 
-    public UserService(
-            UserRepository userRepository,
-            UserProfileRepository profileRepository
-    ) {
+    public UserService(UserRepository userRepository, UserProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
         this.userRepository = userRepository;
     }
