@@ -3,6 +3,7 @@ package com.revature.controllers;
 import com.revature.dtos.UserProfileRequest;
 import com.revature.models.User;
 import com.revature.models.UserProfile;
+import com.revature.services.UserProfileService;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,12 @@ import java.util.Optional;
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
 public class ProfileController {
 
+    private UserProfileService profileService;
     private UserService userService;
 
     @Autowired
-    public ProfileController(UserService userService) {
+    public ProfileController(UserProfileService profileService, UserService userService) {
+        this.profileService = profileService;
         this.userService = userService;
     }
 
@@ -29,7 +32,7 @@ public class ProfileController {
             @RequestBody UserProfileRequest profileRequest
     ) {
         User dbUser = userService.findById(id);
-        Optional<UserProfile> dbProfile = userService.findProfileForUser(id);
+        Optional<UserProfile> dbProfile = profileService.findProfileForUser(id);
         if (dbProfile.isPresent()) {
             return ResponseEntity.ok().build();
         } else {
@@ -42,13 +45,13 @@ public class ProfileController {
             newProfile.setZipCode(profileRequest.getZipCode());
             newProfile.setPhone(profileRequest.getPhone());
             newProfile.setUser(dbUser);
-            return ResponseEntity.ok(userService.saveProfile(newProfile));
+            return ResponseEntity.ok(profileService.saveProfile(newProfile));
         }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserProfile> getProfile(@PathVariable int id) {
-        Optional<UserProfile> dbProfile = userService.findProfileForUser(id);
+        Optional<UserProfile> dbProfile = profileService.findProfileForUser(id);
         if (dbProfile.isPresent()) {
             return ResponseEntity.ok(dbProfile.get());
         } else {
@@ -62,7 +65,7 @@ public class ProfileController {
             @RequestBody UserProfileRequest profileRequest
     ) {
         User dbUser = userService.findById(id);
-        Optional<UserProfile> dbProfile = userService.findProfileForUser(id);
+        Optional<UserProfile> dbProfile = profileService.findProfileForUser(id);
         UserProfile newProfile = new UserProfile();
         newProfile.setFirstName(profileRequest.getFirstName());
         newProfile.setLastName(profileRequest.getLastName());
@@ -75,6 +78,6 @@ public class ProfileController {
         if (dbProfile.isPresent()) {
             newProfile.setId(dbProfile.get().getId());
         }
-        return ResponseEntity.ok(userService.saveProfile(newProfile));
+        return ResponseEntity.ok(profileService.saveProfile(newProfile));
     }
 }

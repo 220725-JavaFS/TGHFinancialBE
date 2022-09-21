@@ -12,11 +12,10 @@ import com.revature.models.UserProfile;
 import com.revature.repositories.UserProfileRepository;
 import com.revature.repositories.UserRepository;
 
-public class UserServiceTests {
+public class UserProfileServiceTest {
 
-	private UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
 	private UserProfileRepository mockProfileRepo = Mockito.mock(UserProfileRepository.class);
-	private UserService userService = new UserService(mockUserRepo, mockProfileRepo);
+	private UserProfileService profileService = new UserProfileService(mockProfileRepo);
 	private User user = new User (1, "email", "passord");
 	private Optional<UserProfile> testProfile = Optional.of(new UserProfile(1, "firstName", "lastName", "address", "city", "state", "zipCode", "phone", user));
 	private UserProfile profile = new UserProfile(1, "firstName", "lastName", "address", "city", "state", "zipCode", "phone", user);
@@ -25,7 +24,7 @@ public class UserServiceTests {
 	public void testFindProfile() {
 		Mockito.when(mockProfileRepo.findByUserId(1))
 			.thenReturn(testProfile);
-		Optional<UserProfile> userProfile = userService.findProfileForUser(1);
+		Optional<UserProfile> userProfile = profileService.findProfileForUser(1);
 		assertEquals(testProfile, userProfile);
 	}
 	
@@ -35,7 +34,7 @@ public class UserServiceTests {
 		
 		Mockito.when(mockProfileRepo.save(profile))
 			.thenReturn(testSaveProfile);
-		UserProfile userProfile = userService.saveProfile(profile);
+		UserProfile userProfile = profileService.saveProfile(profile);
 		assertEquals(testSaveProfile, userProfile);
 	}
 }
