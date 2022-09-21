@@ -45,7 +45,7 @@ class AccountServiceTest {
 		
 		Mockito.when(userService.findById(1)).thenReturn(testUser);
 		Mockito.when(accountRepository.findByUser(Mockito.any(User.class))).thenReturn(testAccount);
-		Optional<Account> serviceTest = as.findByUserId(1);
+		Account serviceTest = as.findByAccountId(1);
 
 		
 		assertEquals(serviceTest, testAccount);

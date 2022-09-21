@@ -48,12 +48,15 @@ public class AccountController {
     @Authorized
     @GetMapping("/{id}")
     public ResponseEntity<Account> getAccount(@PathVariable("id") int accountId) {
-        Optional<Account> optional = accountService.findByUserId(accountId);
+        Account account = accountService.findByAccountId(accountId);
+        System.out.println("I was called here in the Controller Layer");
       
-        if(!optional.isPresent()) {
+        if(account==null) {
             return ResponseEntity.notFound().build();
+        } else {
+        	  return ResponseEntity.status(200).body(account);
         }
-        return ResponseEntity.ok(optional.get());
+      
     }
     
     //added and will get all accounts based on userId 

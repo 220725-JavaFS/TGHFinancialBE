@@ -24,10 +24,17 @@ public class AccountService {
 
     @Autowired
     private UserService userService;
+    
 
-    public Optional<Account> findByUserId(int id) {
-        User user = userService.findById(id);
-        return accountRepository.findByUser(user);
+    public Account findByAccountId(int accountId) {
+    	Optional<Account> optional = accountRepository.findById(accountId);
+    	
+    	if(!optional.isPresent()) {
+    		return null;
+    	}else {
+    		return optional.get();
+    	}
+        
     }
     
     
