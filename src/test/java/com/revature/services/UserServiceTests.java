@@ -19,7 +19,7 @@ public class UserServiceTests {
 	private UserService userService = new UserService(mockUserRepo, mockProfileRepo);
 	private User user = new User (1, "email", "passord");
 	private Optional<UserProfile> testProfile = Optional.of(new UserProfile(1, "firstName", "lastName", "address", "city", "state", "zipCode", "phone", user));
-	
+	private UserProfile profile = new UserProfile(1, "firstName", "lastName", "address", "city", "state", "zipCode", "phone", user);
 	
 	@Test
 	public void testFindProfile() {
@@ -27,5 +27,15 @@ public class UserServiceTests {
 			.thenReturn(testProfile);
 		Optional<UserProfile> userProfile = userService.findProfileForUser(1);
 		assertEquals(testProfile, userProfile);
+	}
+	
+	@Test
+	public void testSaveProfile() {
+		UserProfile testSaveProfile = new UserProfile(1, "firstName", "lastName", "address", "city", "state", "zipCode", "phone", user);
+		
+		Mockito.when(mockProfileRepo.save(profile))
+			.thenReturn(testSaveProfile);
+		UserProfile userProfile = userService.saveProfile(profile);
+		assertEquals(testSaveProfile, userProfile);
 	}
 }
