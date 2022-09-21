@@ -3,6 +3,7 @@ INSERT INTO users (id, email, password) VALUES (
     'testuser@gmail.com',
     'password'
 );
+--Set email to real email to get reset emails
 
 insert into accounts (id, name, balance, description, creation_date, user_id) values (
     1,
