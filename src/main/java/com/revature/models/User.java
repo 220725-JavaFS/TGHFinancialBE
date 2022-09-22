@@ -21,6 +21,7 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.accounts = new LinkedList<Account>();
+		this.darkmode = false;
 	}
 
     @Id
@@ -28,6 +29,8 @@ public class User {
     private Integer id;
     private String email;
     private String password;
+    private boolean darkmode;
+
     
     //Added 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -38,5 +41,10 @@ public class User {
     	accounts.add(accountToAdd);
     	return accounts;
     }
+    
+
+ 
+
+    
     
 }
