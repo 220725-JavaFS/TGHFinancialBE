@@ -86,8 +86,8 @@ public class AccountService {
 	public Account updateAccount(Account account, User user) {
 		account.setUser(user);
 		
+		
 		Account updatedAccount = accountRepository.getById(account.getId());
-        updatedAccount.setBalance(account.getBalance());
         updatedAccount.setDescription(account.getDescription());
         updatedAccount.setName(account.getName());
         updatedAccount.setCreationDate(Instant.now());

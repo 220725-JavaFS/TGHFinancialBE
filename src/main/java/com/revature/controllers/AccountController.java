@@ -42,14 +42,18 @@ public class AccountController {
     public ResponseEntity<Account> updateAccount(@RequestBody Account account, @RequestHeader("Current-User") String userId){
     	User user = userService.findById(Integer.parseInt(userId));
     	Account newAccount = accountService.updateAccount(account, user);
-    	return ResponseEntity.status(200).body(newAccount);
+    	
+    	if(newAccount!=null) {
+    		return ResponseEntity.status(200).body(newAccount);
+    	} else {
+    		return ResponseEntity.status(404).build();
+    	}
     }
     
     @Authorized
     @GetMapping("/{id}")
     public ResponseEntity<Account> getAccount(@PathVariable("id") int accountId) {
         Account account = accountService.findByAccountId(accountId);
-        System.out.println("I was called here in the Controller Layer");
       
         if(account==null) {
             return ResponseEntity.notFound().build();
