@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/account")
-@CrossOrigin(origins = {"*"}, allowCredentials = "true")
+@CrossOrigin(origins = "http://ec2-35-88-77-72.us-west-2.compute.amazonaws.com/", allowCredentials = "true")
 public class AccountController {
 
     @Autowired

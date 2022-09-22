@@ -36,7 +36,7 @@ import com.revature.services.EmailSenderService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {"*"}, allowCredentials = "true")
+@CrossOrigin(origins = ("*"), allowCredentials = "true")
 public class AuthController {
 
 	private static Logger log = LoggerFactory.getLogger(AuthController.class);
