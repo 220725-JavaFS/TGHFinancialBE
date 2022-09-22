@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/profile")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000","http://ec2-35-88-77-72.us-west-2.compute.amazonaws.com/"}, allowCredentials = "true")
 public class ProfileController {
 
     private UserProfileService profileService;
