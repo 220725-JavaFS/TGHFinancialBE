@@ -67,16 +67,31 @@ class AccountServiceTest {
 	
 	@Test
 	void testFindByAccountIdReturnsNull() {
-		when(accountRepository.findById(accountId)).thenReturn(testAccount);
+		Mockito.when(accountRepository.findById(accountId)).thenReturn(testAccount);
 		accountId = 6;
 		assertEquals(null, as.findByAccountId(accountId));
 	}
 	
 	@Test
 	void testFindByAccountIdReturnsNotNull() {
-		when(accountRepository.findById(accountId)).thenReturn(testAccount);
+		Mockito.when(accountRepository.findById(accountId)).thenReturn(testAccount);
 		accountId = 1;
 		assertNotEquals(null, as.findByAccountId(accountId));
 	}
+	
+	@Test
+	void testInsertAccountReturnsAccount() {
+		Account testAccount2 = new Account (1, "Primary Checking", 10000.00,"A really nice bank account to track my checking account transactions", Instant.now(), null);
+		Mockito.when(accountRepository.save(testAccount2)).thenReturn(testAccount2);
+		
+		Account returnedAccount = as.insertAccount(testAccount2, testUser);
+		
+		assertEquals(testAccount2, returnedAccount);		
+	}
+	
+//	@Test
+//	void testUpdateAccountReturnsAccount() {
+//		
+//	}
 
 }

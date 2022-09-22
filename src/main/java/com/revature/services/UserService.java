@@ -1,15 +1,15 @@
 package com.revature.services;
 
-<<<<<<< HEAD
+
 import java.util.List;
 import java.util.Optional;
 
-=======
+
 import com.revature.models.User;
 import com.revature.models.UserProfile;
 import com.revature.repositories.UserProfileRepository;
 import com.revature.repositories.UserRepository;
->>>>>>> origin/main
+
 import org.springframework.stereotype.Service;
 
 import com.revature.models.Account;
@@ -49,13 +49,7 @@ public class UserService {
 		return userRepository.findByEmail(email);
 	}
 
-<<<<<<< HEAD
-	public User save(User user) {
-		return userRepository.save(user);
-	}
 
-=======
->>>>>>> origin/main
 }
 
 
