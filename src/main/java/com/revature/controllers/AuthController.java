@@ -36,7 +36,7 @@ import com.revature.services.EmailSenderService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "ec2-35-88-77-72.us-west-2.compute.amazonaws.com:80/"}, allowCredentials = "true")
+@CrossOrigin(origins = {"*"}, allowCredentials = "true")
 public class AuthController {
 
 	private static Logger log = LoggerFactory.getLogger(AuthController.class);
