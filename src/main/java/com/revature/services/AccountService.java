@@ -36,25 +36,6 @@ public class AccountService {
     	}
         
     }
-    
-    
-    public Account upsertAccount(Account accountToUpsert, String userId) {
-
-        int id = Integer.parseInt(userId);
-        User user = userService.findById(id);
-
-        if(accountRepository.existsById(accountToUpsert.getId())) {
-            Account account = accountRepository.getById(accountToUpsert.getId());
-            account.setBalance(accountToUpsert.getBalance());
-            account.setDescription(accountToUpsert.getDescription());
-            account.setName(accountToUpsert.getName());
-            return accountRepository.saveAndFlush(account);
-        } else {
-            accountToUpsert.setUser(user);
-            accountToUpsert.setCreationDate(Instant.now());
-            return accountRepository.save(accountToUpsert);
-        }
-    }
 
     public List<Transaction> getAllTransactions(int accountId) {
         Account account = accountRepository.getById(accountId);
@@ -85,7 +66,6 @@ public class AccountService {
 	//added - updates account info. needs testing but it works!
 	public Account updateAccount(Account account, User user) {
 		account.setUser(user);
-		
 		
 		Account updatedAccount = accountRepository.getById(account.getId());
         updatedAccount.setDescription(account.getDescription());

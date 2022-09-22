@@ -67,7 +67,6 @@ class AccountServiceTest {
 	
 	@Test
 	void testFindByAccountIdReturnsNull() {
-		
 		when(accountRepository.findById(accountId)).thenReturn(testAccount);
 		accountId = 6;
 		assertEquals(null, as.findByAccountId(accountId));
@@ -75,7 +74,6 @@ class AccountServiceTest {
 	
 	@Test
 	void testFindByAccountIdReturnsNotNull() {
-		
 		when(accountRepository.findById(accountId)).thenReturn(testAccount);
 		accountId = 1;
 		assertNotEquals(null, as.findByAccountId(accountId));

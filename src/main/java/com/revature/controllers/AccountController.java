@@ -72,12 +72,6 @@ public class AccountController {
     }
 
     @Authorized
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Account> createAccount(@RequestBody Account account, @RequestHeader("Current-User") String userId) {
-        return ResponseEntity.ok(accountService.upsertAccount(account, userId));
-    }
-
-    @Authorized
     @GetMapping("/{id}/transaction")
     public ResponseEntity<List<Transaction>> getTransactions(@PathVariable("id") int accountId) {
         return ResponseEntity.ok(accountService.getAllTransactions(accountId));
