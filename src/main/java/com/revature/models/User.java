@@ -18,4 +18,14 @@ public class User {
     private Integer id;
     private String email;
     private String password;
+    private boolean darkmode;
+	public User(Integer id, String email, String password) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.darkmode = false;
+	}
+    
+    
 }
