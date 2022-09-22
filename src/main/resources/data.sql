@@ -1,7 +1,14 @@
-INSERT INTO users (id, email, password) VALUES (
+INSERT INTO users (id, email, password, darkmode) VALUES (
     1,
-    'testuser@gmail.com',
-    'password'
+    'test@test.com',
+    'password',
+    false
+),
+(
+    2,
+    'test',
+    'password',
+    true
 );
 --Set email to real email to get reset emails
 
