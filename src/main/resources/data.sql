@@ -1,6 +1,6 @@
 INSERT INTO users (id, email, password, darkmode) VALUES (
     1,
-    'test@test.com',
+    'testuser@gmail.com',
     'password',
     false
 ),
