@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import com.revature.annotations.Authorized;
 import com.revature.dtos.UserProfileRequest;
 import com.revature.models.User;
 import com.revature.models.UserProfile;
@@ -27,6 +28,7 @@ public class ProfileController {
 		this.userService = userService;
 	}
 
+	@Authorized
 	@PostMapping("/{id}")
 	public ResponseEntity<UserProfile> setProfile(@PathVariable int id,
 			@RequestBody UserProfileRequest profileRequest) {
@@ -48,6 +50,7 @@ public class ProfileController {
 		}
 	}
 
+	@Authorized
 	@GetMapping("/{id}")
 	public ResponseEntity<UserProfile> getProfile(@PathVariable int id) {
 		Optional<UserProfile> dbProfile = profileService.findProfileForUser(id);
@@ -58,6 +61,7 @@ public class ProfileController {
 		}
 	}
 
+	@Authorized
 	@PutMapping("/{id}")
 	public ResponseEntity<UserProfile> updateProfile(@PathVariable int id,
 			@RequestBody UserProfileRequest profileRequest) {
@@ -78,6 +82,7 @@ public class ProfileController {
 		return ResponseEntity.ok(profileService.saveProfile(newProfile));
 	}
 
+	@Authorized
 	@PutMapping("/darkmode")
 	public ResponseEntity<User> updateDarkmode(@RequestBody User user) {
 		User existingUser = userService.findById(user.getId());
