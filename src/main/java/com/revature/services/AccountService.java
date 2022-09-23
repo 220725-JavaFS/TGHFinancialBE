@@ -56,6 +56,7 @@ public class AccountService {
             return transactionRepository.save(transactionToUpsert);
     }
 
+
     // added - insert new account. needs testing
 	public Account insertAccount(Account account, User user) {
 		account.setUser(user);
@@ -68,10 +69,43 @@ public class AccountService {
 		account.setUser(user);
 		
 		Account updatedAccount = accountRepository.getById(account.getId());
+
+        updatedAccount.setBalance(account.getBalance());
         updatedAccount.setDescription(account.getDescription());
         updatedAccount.setName(account.getName());
         updatedAccount.setCreationDate(Instant.now());
         return accountRepository.saveAndFlush(updatedAccount);
 		}
+
+
+
+    public Transaction sendMoneyTransaction(int accountId, Transaction transactionToSend,int receiveId) {
+    	Account account = accountRepository.getById(accountId);
+    	Account receiveAccount = accountRepository.getById(receiveId);  
+    	Transaction receiveTransaction = new Transaction();
+    	
+    	if (account.getBalance()>= transactionToSend.getAmount() && transactionToSend.getAmount() >= 0) {
+    	receiveTransaction.setAmount(transactionToSend.getAmount());
+    	receiveTransaction.setAccount(receiveAccount);
+    	receiveTransaction.setDescription(transactionToSend.getDescription());
+    	receiveTransaction.setType(TransactionType.Income);
+    	transactionRepository.save(receiveTransaction);
+    	
+    	 account.setBalance(account.getBalance() - transactionToSend.getAmount());
+    	 receiveAccount.setBalance(receiveAccount.getBalance() + transactionToSend.getAmount());
+    	
+    	 accountRepository.saveAndFlush(account);
+    	 accountRepository.saveAndFlush(receiveAccount);
+    	 
+    	 transactionToSend.setAccount(account);
+    	 transactionRepository.save(transactionToSend);
+    	 
+    	 //transactionToSend.setAccount(receiveAccount);
+    	 return transactionToSend;
+    	}else {
+    		return null;
+    	}
+    }
+
 
 }

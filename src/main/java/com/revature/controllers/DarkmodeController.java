@@ -14,7 +14,7 @@ import com.revature.services.UserService;
 
 @RestController
 @RequestMapping("darkmode")
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:3000" }, allowCredentials = "true")
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:3000","http://ec2-35-88-77-72.us-west-2.compute.amazonaws.com/" }, allowCredentials = "true")
 public class DarkmodeController {
 	@Autowired
 	private UserService userService;
