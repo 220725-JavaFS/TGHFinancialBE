@@ -43,6 +43,7 @@ public class AuthController {
 	private final AuthService authService;
     private EmailSenderService emailSenderService;
 
+
 	public AuthController(AuthService authService,  EmailSenderService emailSenderService) {
 		this.authService = authService;
 		this.emailSenderService = emailSenderService;
@@ -103,7 +104,7 @@ public class AuthController {
 
 	@PostMapping("/register")
 	public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
-		User created = new User(0, registerRequest.getEmail(), registerRequest.getPassword(), false);
+		User created = new User(0, registerRequest.getEmail(), registerRequest.getPassword());
 		//log user
 		log.info("New User created: " + created);
 		return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));

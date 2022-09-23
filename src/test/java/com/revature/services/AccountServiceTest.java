@@ -9,6 +9,7 @@ import com.revature.repositories.TransactionRepository;
 import com.revature.repositories.UserRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -26,10 +27,14 @@ class AccountServiceTest {
 
 	private User testUser = new User(1, "example@example.com", "password");
 	private Optional<Account> testAccount = Optional.of(new Account(1, "Primary Checking", 10000.00,"A really nice bank account to track my checking account transactions", Instant.now(), null));
+
+	private Account testAccount3 = new Account(1, "Primary Checking", 10000.00,"A really nice bank account to track my checking account transactions", Instant.now(), null);
+	List<Transaction> testTransaction = new ArrayList<Transaction>(0);
+	private int accountId;
+
 	private Optional<Account> testAccount2 = Optional.of(new Account(2, "Primary Checking", 10000.00,"A really nice bank account to track my checking account transactions", Instant.now(), null));
 	private Transaction testSendTransaction = new Transaction(1, 100.00, "checking", TransactionType.Expense, null);
-	List<Transaction> testTransaction = new ArrayList<Transaction>(0);
-	
+
 	@Mock
 	private AccountRepository accountRepository;
 	@Mock
@@ -42,17 +47,7 @@ class AccountServiceTest {
 	@BeforeEach
 	public void userService() {
 		MockitoAnnotations.openMocks(this);
-	}
-	
-	@Test
-	void testFindByUserId() {
-		
-		Mockito.when(userService.findById(1)).thenReturn(testUser);
-		Mockito.when(accountRepository.findByUser(Mockito.any(User.class))).thenReturn(testAccount);
-		Optional<Account> serviceTest = as.findByUserId(1);
-
-		
-		assertEquals(serviceTest, testAccount);
+		accountId = 0;
 	}
 
 	@Test
@@ -67,6 +62,40 @@ class AccountServiceTest {
 	}
 	
 	@Test
+	void testFindByAccountIdReturnsNotNull() {
+		accountId = 6;
+		Mockito.when(accountRepository.findById(accountId)).thenReturn(Optional.of((new Account(1, "Primary Checking", 10000.00,"A really nice bank account to track my checking account transactions", Instant.now(), null))));
+		assertNotEquals(null, as.findByAccountId(accountId));
+	}
+	
+	@Test
+	void testFindByAccountIdReturnsNull() {
+		when(accountRepository.findById(accountId)).thenReturn(Optional.of((new Account(1, "Primary Checking", 10000.00,"A really nice bank account to track my checking account transactions", Instant.now(), null))));
+		accountId = 1;
+		assertEquals(null, as.findByAccountId(accountId));
+	}
+	
+	@Test
+	void testInsertAccountReturnsNull() {
+		Mockito.when(accountRepository.save(testAccount3)).thenReturn(testAccount3);
+		
+		Account returnedAccount = as.insertAccount(testAccount3, testUser);
+		
+		assertEquals(testAccount3, returnedAccount);		
+	}
+	
+	@Test
+	void testUpdateAccountReturnsAccount() {
+		Mockito.when(accountRepository.saveAndFlush(testAccount3)).thenReturn(testAccount3);
+		when(accountRepository.getById(testAccount3.getId())).thenReturn(testAccount3);
+		
+		Account returnedUpdatedAccount = as.updateAccount(testAccount3, testUser);
+		
+		assertEquals(testAccount3, returnedUpdatedAccount);
+		
+	}
+
+
 	void testSendMoneyTransaction() {
 		
 		Account testAccount = new Account (1, null, 1000.00, null, null, null);
@@ -93,4 +122,5 @@ class AccountServiceTest {
 		
 		
 }
+
 }

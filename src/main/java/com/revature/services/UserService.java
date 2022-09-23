@@ -1,12 +1,20 @@
 package com.revature.services;
 
+
+import java.util.List;
+import java.util.Optional;
+
+
 import com.revature.models.User;
 import com.revature.models.UserProfile;
 import com.revature.repositories.UserProfileRepository;
 import com.revature.repositories.UserRepository;
+
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.revature.models.Account;
+import com.revature.models.User;
+import com.revature.repositories.UserRepository;
 
 @Service
 public class UserService {
@@ -20,6 +28,11 @@ public class UserService {
 	public User findUserByEmail(String email) {
 		return userRepository.findUserByEmail(email);
 	}
+	
+	  public List<Account> getAllAccounts(int userId) {
+	    	return this.findById(userId).getAccounts();
+	    }
+	 
 
 	public User findById(int id) {
 		return userRepository.getById(id);
@@ -35,6 +48,7 @@ public class UserService {
 	public Optional<User> findByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
+
 
 }
 
