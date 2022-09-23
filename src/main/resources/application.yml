@@ -17,7 +17,7 @@ spring:
     host: smtp.office365.com
     port: 587  
     username: TGHFinancial@outlook.com
-    password: 1drowassP
+    password: FV+v&.J?!BT2w=3
     protocol: smtp
     tls: true
     properties.mail.smtp:
