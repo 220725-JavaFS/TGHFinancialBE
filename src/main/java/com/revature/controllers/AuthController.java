@@ -21,15 +21,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
+import com.revature.dtos.UserProfileRequest;
 import com.revature.models.ConfirmationToken;
 import com.revature.models.User;
+import com.revature.models.UserProfile;
 import com.revature.services.AuthService;
+import com.revature.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.revature.services.EmailSenderService;
 
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:3000" }, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "ec2-35-88-77-72.us-west-2.compute.amazonaws.com:80/"}, allowCredentials = "true")
 public class AuthController {
 
 	private static Logger log = LoggerFactory.getLogger(AuthController.class);

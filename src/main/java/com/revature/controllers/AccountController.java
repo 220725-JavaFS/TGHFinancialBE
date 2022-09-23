@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/account")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000","ec2-35-88-77-72.us-west-2.compute.amazonaws.com:80/"}, allowCredentials = "true")
 public class AccountController {
 
     @Autowired
@@ -42,18 +42,25 @@ public class AccountController {
     public ResponseEntity<Account> updateAccount(@RequestBody Account account, @RequestHeader("Current-User") String userId){
     	User user = userService.findById(Integer.parseInt(userId));
     	Account newAccount = accountService.updateAccount(account, user);
-    	return ResponseEntity.status(200).body(newAccount);
+    	
+    	if(newAccount!=null) {
+    		return ResponseEntity.status(200).body(newAccount);
+    	} else {
+    		return ResponseEntity.status(404).build();
+    	}
     }
     
     @Authorized
     @GetMapping("/{id}")
     public ResponseEntity<Account> getAccount(@PathVariable("id") int accountId) {
-        Optional<Account> optional = accountService.findByUserId(accountId);
+        Account account = accountService.findByAccountId(accountId);
       
-        if(!optional.isPresent()) {
+        if(account==null) {
             return ResponseEntity.notFound().build();
+        } else {
+        	  return ResponseEntity.status(200).body(account);
         }
-        return ResponseEntity.ok(optional.get());
+      
     }
     
     //added and will get all accounts based on userId 
@@ -62,12 +69,6 @@ public class AccountController {
     public ResponseEntity<List<Account>> getAllAccount(@PathVariable("id") int userId) {
         List<Account> accounts = userService.getAllAccounts(userId);
         return ResponseEntity.status(200).body(accounts);
-    }
-
-    @Authorized
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Account> createAccount(@RequestBody Account account, @RequestHeader("Current-User") String userId) {
-        return ResponseEntity.ok(accountService.upsertAccount(account, userId));
     }
 
     @Authorized

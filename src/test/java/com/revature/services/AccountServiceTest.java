@@ -8,6 +8,7 @@ import com.revature.repositories.TransactionRepository;
 import com.revature.repositories.UserRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -25,7 +26,9 @@ class AccountServiceTest {
 
 	private User testUser = new User(1, "example@example.com", "password");
 	private Optional<Account> testAccount = Optional.of(new Account(1, "Primary Checking", 10000.00,"A really nice bank account to track my checking account transactions", Instant.now(), null));
+	private Account testAccount2 = new Account(1, "Primary Checking", 10000.00,"A really nice bank account to track my checking account transactions", Instant.now(), null);
 	List<Transaction> testTransaction = new ArrayList<Transaction>(0);
+	private int accountId;
 	@Mock
 	private AccountRepository accountRepository;
 	@Mock
@@ -38,17 +41,7 @@ class AccountServiceTest {
 	@BeforeEach
 	public void userService() {
 		MockitoAnnotations.openMocks(this);
-	}
-	
-	@Test
-	void testFindByUserId() {
-		
-		Mockito.when(userService.findById(1)).thenReturn(testUser);
-		Mockito.when(accountRepository.findByUser(Mockito.any(User.class))).thenReturn(testAccount);
-		Optional<Account> serviceTest = as.findByUserId(1);
-
-		
-		assertEquals(serviceTest, testAccount);
+		accountId = 0;
 	}
 
 	@Test
@@ -60,6 +53,40 @@ class AccountServiceTest {
 
 		
 		assertEquals(serviceTest, testTransaction);
+	}
+	
+	@Test
+	void testFindByAccountIdReturnsNotNull() {
+		accountId = 6;
+		Mockito.when(accountRepository.findById(accountId)).thenReturn(Optional.of((new Account(1, "Primary Checking", 10000.00,"A really nice bank account to track my checking account transactions", Instant.now(), null))));
+		assertNotEquals(null, as.findByAccountId(accountId));
+	}
+	
+	@Test
+	void testFindByAccountIdReturnsNull() {
+		when(accountRepository.findById(accountId)).thenReturn(Optional.of((new Account(1, "Primary Checking", 10000.00,"A really nice bank account to track my checking account transactions", Instant.now(), null))));
+		accountId = 1;
+		assertEquals(null, as.findByAccountId(accountId));
+	}
+	
+	@Test
+	void testInsertAccountReturnsNull() {
+		Mockito.when(accountRepository.save(testAccount2)).thenReturn(testAccount2);
+		
+		Account returnedAccount = as.insertAccount(testAccount2, testUser);
+		
+		assertEquals(testAccount2, returnedAccount);		
+	}
+	
+	@Test
+	void testUpdateAccountReturnsAccount() {
+		Mockito.when(accountRepository.saveAndFlush(testAccount2)).thenReturn(testAccount2);
+		when(accountRepository.getById(testAccount2.getId())).thenReturn(testAccount2);
+		
+		Account returnedUpdatedAccount = as.updateAccount(testAccount2, testUser);
+		
+		assertEquals(testAccount2, returnedUpdatedAccount);
+		
 	}
 
 }

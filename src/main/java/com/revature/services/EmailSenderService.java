@@ -23,7 +23,7 @@ public class EmailSenderService {
 	@Autowired
 	private JavaMailSender javaMailSender;
 	
-	@Autowired
+	@Autowired 
 	private AuthService authService; 
 
 	@Async

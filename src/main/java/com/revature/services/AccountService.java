@@ -24,29 +24,17 @@ public class AccountService {
 
     @Autowired
     private UserService userService;
-
-    public Optional<Account> findByUserId(int id) {
-        User user = userService.findById(id);
-        return accountRepository.findByUser(user);
-    }
     
-    
-    public Account upsertAccount(Account accountToUpsert, String userId) {
 
-        int id = Integer.parseInt(userId);
-        User user = userService.findById(id);
-
-        if(accountRepository.existsById(accountToUpsert.getId())) {
-            Account account = accountRepository.getById(accountToUpsert.getId());
-            account.setBalance(accountToUpsert.getBalance());
-            account.setDescription(accountToUpsert.getDescription());
-            account.setName(accountToUpsert.getName());
-            return accountRepository.saveAndFlush(account);
-        } else {
-            accountToUpsert.setUser(user);
-            accountToUpsert.setCreationDate(Instant.now());
-            return accountRepository.save(accountToUpsert);
-        }
+    public Account findByAccountId(int accountId) {
+    	Optional<Account> optional = accountRepository.findById(accountId);
+    	
+    	if(!optional.isPresent()) {
+    		return null;
+    	}else {
+    		return optional.get();
+    	}
+        
     }
 
     public List<Transaction> getAllTransactions(int accountId) {
@@ -80,7 +68,6 @@ public class AccountService {
 		account.setUser(user);
 		
 		Account updatedAccount = accountRepository.getById(account.getId());
-        updatedAccount.setBalance(account.getBalance());
         updatedAccount.setDescription(account.getDescription());
         updatedAccount.setName(account.getName());
         updatedAccount.setCreationDate(Instant.now());
