@@ -23,13 +23,13 @@
 	- For EC2's with limited resources use swap space
 		- https://aws.amazon.com/premiumsupport/knowledge-center/ec2-memory-swap-file/
 			- Our instance
-				sudo dd if=/dev/zero of=/swapfile bs=128M count=8
-				sudo chmod 600 /swapfile
-				sudo mkswap /swapfile
-				sudo swapon /swapfile
-				sudo swapon -s
-				sudo vi /etc/fstab
-					/swapfile swap swap defaults 0 0
+				- sudo dd if=/dev/zero of=/swapfile bs=128M count=8
+				- sudo chmod 600 /swapfile
+				- sudo mkswap /swapfile
+				- sudo swapon /swapfile
+				- sudo swapon -s
+				- sudo vi /etc/fstab
+				- vim -> /swapfile swap swap defaults 0 0
 					
 ## Jenkins
 * Jenkins (Instance public IP Address):8080/jenkins)
