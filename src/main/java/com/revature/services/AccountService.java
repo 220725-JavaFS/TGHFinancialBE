@@ -70,7 +70,7 @@ public class AccountService {
 		
 		Account updatedAccount = accountRepository.getById(account.getId());
 
-        updatedAccount.setBalance(account.getBalance());
+//        updatedAccount.setBalance(account.getBalance());
         updatedAccount.setDescription(account.getDescription());
         updatedAccount.setName(account.getName());
         updatedAccount.setCreationDate(Instant.now());
