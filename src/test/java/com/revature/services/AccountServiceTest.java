@@ -96,6 +96,7 @@ class AccountServiceTest {
 	}
 
 
+	@Test
 	void testSendMoneyTransaction() {
 		
 		Account testAccount = new Account (1, null, 1000.00, null, null, null);
