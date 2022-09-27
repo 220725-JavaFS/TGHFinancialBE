@@ -70,10 +70,12 @@ public class AccountService {
 		
 		Account updatedAccount = accountRepository.getById(account.getId());
 
+<<<<<<< HEAD
         updatedAccount.setBalance(account.getBalance());
+=======
+>>>>>>> origin/main
         updatedAccount.setDescription(account.getDescription());
         updatedAccount.setName(account.getName());
-        updatedAccount.setCreationDate(Instant.now());
         return accountRepository.saveAndFlush(updatedAccount);
 		}
 
